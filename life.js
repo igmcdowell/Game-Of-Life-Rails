@@ -57,7 +57,7 @@ function Run(grid, runstatus) {
 }
 
 function Start(runName, stopName, grid) {
-    $("#thegame table").toggleClass("running");
+    $("#thegame table").addClass("running");
     $('#gamecontrol')[0].value = runName;
 	$('#gamecontrol').html(stopName);
 	Run(grid, runName);
@@ -65,7 +65,7 @@ function Start(runName, stopName, grid) {
 }
 
 function Stop(runName, stopName) {
-    $("#thegame table").toggleClass("running");
+    $("#thegame table").removeClass("running");
     $('#gamecontrol')[0].value = stopName;
 	$('#gamecontrol').html(runName);
 	$('#advance').removeAttr('disabled');

@@ -124,8 +124,7 @@ tr {
     max-width:800px;
 }
 
-.group :first-child {
-margin-top:0px;
-margin-left: 0px;
+.group > .group {
+margin:0px;
 }
 
