@@ -43,20 +43,20 @@ function PrintGrid(grid) {
  
 
 
-function Run(runstatus) {
+function Run(grid, runstatus) {
     var slidepos = $("#gamespeed")[0].value;
     var tdelay = 1000 - slidepos/178*900;
 	window.setTimeout(function(){
 		var status = $('#gamecontrol')[0].value;
 		if(status == runstatus) 
 		{
-			Advance();
-			Run(runstatus);
+			Advance(grid);
+			Run(grid, runstatus);
 		}
 	}, tdelay, true);
 }
 
-function StartStop() {
+function StartStop(grid) {
 	var status = $('#gamecontrol')[0].value;
 	var runName = "Run Simulation";
 	var stopName = "Stop Simulation";
@@ -69,7 +69,7 @@ function StartStop() {
 	else {
 		$('#gamecontrol')[0].value = runName;
 		$('#gamecontrol').html(stopName);
-		Run(runName);
+		Run(grid, runName);
 		$('#advance').attr('disabled', 'disabled');
 	}
 }
@@ -170,7 +170,7 @@ function ToggleSpot(spot, grid) {
 
 //Advance advances by toggling cells
 function Advance(grid) {
-	var changes = RunDay(grid);
+	var changes = RunDay(grid.rawgrid);
 	for (change in changes) {
 		var r = changes[change][0];
 		var c = changes[change][1];

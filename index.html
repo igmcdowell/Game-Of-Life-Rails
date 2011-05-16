@@ -24,6 +24,13 @@
 				$("td").unbind('mouseover');
 			});
 			$("#speedcontrol").draggable({ axis: 'x' }, { containment: 'parent' });
+			$("#advance").click(function(){
+				Advance(g);
+			});
+			$("#gamecontrol").click(function(){
+				StartStop(g);
+			});
+			
 			$(".toggle").click(function(){
 				$(this).toggleClass('expanded');
 				if($(this).hasClass('expanded')) {
@@ -165,7 +172,7 @@
 						</div>
 						<div id="speedcontrol"></div>
 					</div>
-					<button id="advance" onclick="Advance()">Advance One Day</button><button id="gamecontrol" value="stop" onclick="StartStop()">Run Simulation</button>
+					<button id="advance">Advance One Day</button><button id="gamecontrol" value="stop">Run Simulation</button>
 					<div><input type="checkbox" id="rainbow" checked="checked" /> Rainbow Cells
 						</div>
 			</div>
