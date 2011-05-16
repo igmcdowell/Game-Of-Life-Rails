@@ -118,7 +118,7 @@ function Grid(width, height) {
         var colorfloor = '5E';
         var percent = 100/(this.width);
         $("#columncolors").remove();
-        var stylehtml = '<style id="columncolors">';
+        var stylehtml = '<style type="text/css" id="columncolors">';
         for (column in this.rawgrid[0]) {
             hex = AdvanceRGBHex(hex, colorfloor, percent);
             rule = ' table.rainbowtable * .c' + String(column) + '.live {background-color:#'+hex+';}\n '; 
@@ -153,8 +153,8 @@ function NewGrid() {
 function SetBoxSize() {
 	var val =$('#boxsize')[0].value;
 	var newsize = parseInt(val);
-	$('td').css('min-width', newsize);
-	$('td').css('height', newsize);
+	$("#boxstyle").remove();
+	$("<style type='text/css' id='boxstyle'> td{ min-width:"+ val + "px; height:" + val+"px;} </style>").appendTo("head");
 }
 
 function ToggleSpot(spot, grid) {
