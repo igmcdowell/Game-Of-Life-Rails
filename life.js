@@ -75,10 +75,7 @@ function StartStop(grid) {
 }
 
 
-
-
 function Grid(width, height) {
-    
     /* MakeGrid takes a width and height and returns a wXh array initialized to 0*/
     this.MakeGrid =function(width, height) {
        if(height == 0){
@@ -148,8 +145,9 @@ function NewGrid() {
 	$('#lifegrid').remove();
 	var w =parseFloat($('#gridwidth')[0].value);
 	var h =parseFloat($('#gridheight')[0].value);
-	g = MakeGrid(w,h);
-	AddGrid(g);
+	g = new Grid(w,h);
+	g.AddGridToDOM();
+	return g;
 }
 	
 function SetBoxSize() {

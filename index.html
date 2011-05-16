@@ -30,6 +30,11 @@
 			$("#gamecontrol").click(function(){
 				StartStop(g);
 			});
+			$("#newgrid").click(function(){
+				w= $("#gridwidth")[0].value;
+				h= $("#gridheight")[0].value;
+				g = NewGrid(w,h);
+			});
 			
 			$(".toggle").click(function(){
 				$(this).toggleClass('expanded');
@@ -181,7 +186,7 @@
 				Cell Size:<input id="boxsize" value="20"><button onclick="SetBoxSize()">Set Cell Size</button>
 			</div>
 			<div>
-				Reset Grid - Width: <input id="gridwidth" value="50"> Height:<input id="gridheight" value="50"> <button onclick="NewGrid()">Make New Grid</button>
+				Reset Grid - Width: <input id="gridwidth" value="50"> Height:<input id="gridheight" value="50"> <button id="newgrid">Make New Grid</button>
 			</div>
 		</div>
 		</div>
