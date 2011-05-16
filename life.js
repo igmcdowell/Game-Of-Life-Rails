@@ -56,21 +56,31 @@ function Run(grid, runstatus) {
 	}, tdelay, true);
 }
 
+function Start(runName, stopName, grid) {
+    $("#thegame table").toggleClass("running");
+    $('#gamecontrol')[0].value = runName;
+	$('#gamecontrol').html(stopName);
+	Run(grid, runName);
+	$('#advance').attr('disabled', 'disabled');
+}
+
+function Stop(runName, stopName) {
+    $("#thegame table").toggleClass("running");
+    $('#gamecontrol')[0].value = stopName;
+	$('#gamecontrol').html(runName);
+	$('#advance').removeAttr('disabled');
+}
+
 function StartStop(grid) {
 	var status = $('#gamecontrol')[0].value;
 	var runName = "Run Simulation";
 	var stopName = "Stop Simulation";
-	$("#thegame table").toggleClass("running");
+	
 	if(status == runName) {
-		$('#gamecontrol')[0].value = stopName;
-		$('#gamecontrol').html(runName);
-		$('#advance').removeAttr('disabled');
+        Stop(runName, stopName);
 	}
 	else {
-		$('#gamecontrol')[0].value = runName;
-		$('#gamecontrol').html(stopName);
-		Run(grid, runName);
-		$('#advance').attr('disabled', 'disabled');
+	    Start(runName, stopName, grid)
 	}
 }
 
@@ -196,6 +206,7 @@ function RemoveShape(targetcell, shape, oldvals, grid) {
 }
 
 function DragShape(shape, grid) {
+    Stop("Run Simulation", "Stop Simulation");
     $("body").css('cursor', 'pointer');
 	$("td").mouseover(function(){
 		RenderShape(this, shape, grid);
