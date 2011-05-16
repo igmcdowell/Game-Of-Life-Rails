@@ -17,10 +17,9 @@
 </script>
 		<script type="text/javascript">
 
-	var g = MakeGrid(50,50);
-
 		$(document).ready(function() {
-			NewGrid();
+			var g = new Grid(50,50);
+			g.AddGridToDOM();
 			$(document).mouseup(function(){
 				$("td").unbind('mouseover');
 			});
@@ -47,19 +46,19 @@
 			});
 			
 			$("#blinker").mousedown(function() {
-				DragShape([[0,-1],[0,0],[0,1]]);
+				DragShape([[0,-1],[0,0],[0,1]], g);
 			});
 			
 			$("#glider").mousedown(function(){
-				DragShape([[-1,1],[0,0],[1,0],[-1,-1],[0,-1]]);
+				DragShape([[-1,1],[0,0],[1,0],[-1,-1],[0,-1]],g);
 			});
 			
 			$("#toad").mousedown(function(){
-				DragShape([[0,0],[1,0],[2,0],[-1,-1],[0,-1],[1,-1]]);
+				DragShape([[0,0],[1,0],[2,0],[-1,-1],[0,-1],[1,-1]],g);
 			});
 			
 			$("#beacon").mousedown(function(){
-				DragShape([[0,0],[1,0],[0,1],[1,1],[2,2],[3,2],[2,3],[3,3]]);
+				DragShape([[0,0],[1,0],[0,1],[1,1],[2,2],[3,2],[2,3],[3,3]],g);
 			});
 			
 			$("#pulsar").mousedown(function(){
@@ -73,21 +72,21 @@
 					[-2,9],[3,9],[5,9],[10,9],
 					[-2,10],[3,10],[5,10],[10,10],
 					[0,12],[1,12],[2,12],[6,12],[7,12],[8,12],
-					]);
+					],g);
 			});
 			
 			$("#fpentomino").mousedown(function(){
-				DragShape([[0,0],[1,0],[-1,1],[0,1],[0,2]]);
+				DragShape([[0,0],[1,0],[-1,1],[0,1],[0,2]],g);
 			});
 			
 			$("#diehard").mousedown(function(){
-				DragShape([[6,-1],[0,0],[1,0],[1,1],[5,1],[6,1],[7,1]]);
+				DragShape([[6,-1],[0,0],[1,0],[1,1],[5,1],[6,1],[7,1]],g);
 			});
 			$("#acorn").mousedown(function(){
-				DragShape([[0,0],[2,1],[-1,2],[0,2],[3,2],[4,2],[5,2]]);
+				DragShape([[0,0],[2,1],[-1,2],[0,2],[3,2],[4,2],[5,2]],g);
 			});
 			$("#lwss").mousedown(function(){
-				DragShape([[0,0],[3,0],[4,1],[0,2],[4,2],[1,3],[2,3],[3,3],[4,3]]);
+				DragShape([[0,0],[3,0],[4,1],[0,2],[4,2],[1,3],[2,3],[3,3],[4,3]],g);
 			});
 			
 		});

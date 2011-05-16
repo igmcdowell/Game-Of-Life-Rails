@@ -74,56 +74,76 @@ function StartStop() {
 	}
 }
 
-function MakeGrid(width, height) {
-   if(height == 0){
-       return Array();
-   }
-   var row = Array();
-   for (var i=0; i<width; i++) {
-       row.push(0)
-   }
-   var grid = Array(row);
-   grid = grid.concat(MakeGrid(width, height -1));
-   return grid;
-} 
- 
-function GridToHTML(grid) {
-    var rawhtml = '<div id="thegame"><table id="lifegrid" class="rainbowtable">';
-    var state = ['dead', 'live'];
-    for (line in grid) {
-        rawhtml = rawhtml + '<tr id="row' + String(line)+'">';
-        for (element in grid[line]) {
-            rawhtml = rawhtml + '<td id = "r' + String(line) + 'c' + String(element) + '" class="' + state[grid[line][element]] +' c' + String(element)+'">&nbsp;</td>';
+
+
+
+function Grid(width, height) {
+    
+    /* MakeGrid takes a width and height and returns a wXh array initialized to 0*/
+    this.MakeGrid =function(width, height) {
+       if(height == 0){
+           return Array();
+       }
+       var row = Array();
+       for (var i=0; i<width; i++) {
+           row.push(0)
+       }
+       var grid = Array(row);
+       grid = grid.concat(this.MakeGrid(width, height -1));
+       return grid;
+    }
+    
+    this.ToggleVal = function(x,y) {
+        if (this.rawgrid[x][y] == 0) 
+    		this.rawgrid[x][y] = 1;
+    	else
+    		this.rawgrid[x][y]= 0;
+    }
+    
+    /* GridToHTML takes the grid of 0s and 1s and converts it to an HTML table. */
+    this.GridToHTML = function() {
+        var rawhtml = '<div id="thegame"><table id="lifegrid" class="rainbowtable">';
+        var state = ['dead', 'live'];
+        for (line in this.rawgrid) {
+            rawhtml = rawhtml + '<tr id="row' + String(line)+'">';
+            for (element in this.rawgrid[line]) {
+                rawhtml = rawhtml + '<td id = "r' + String(line) + 'c' + String(element) + '" class="' + state[this.rawgrid[line][element]] +' c' + String(element)+'">&nbsp;</td>';
+            }
+            rawhtml = rawhtml + '</tr>';
         }
-        rawhtml = rawhtml + '</tr>';
+        rawhtml = rawhtml + '</table></div>';
+        return rawhtml;
+    }    
+    
+    this.AddGridToDOM = function(){
+        var grid = this;
+        var hex = 'FF5E5E';
+        var colorfloor = '5E';
+        var percent = 100/(this.width);
+        $("#columncolors").remove();
+        var stylehtml = '<style id="columncolors">';
+        for (column in this.rawgrid[0]) {
+            hex = AdvanceRGBHex(hex, colorfloor, percent);
+            rule = ' table.rainbowtable * .c' + String(column) + '.live {background-color:#'+hex+';}\n '; 
+            stylehtml = stylehtml + rule;
+        }
+        stylehtml = stylehtml + '</style>';
+        $(stylehtml).appendTo('head');
+    	$(document.body).append(this.html);
+    	$("#lifegrid td").mousedown(function(){
+    		ToggleSpot(this, grid);
+    		$("#lifegrid td").mouseover(function(){
+    			ToggleSpot(this, grid);
+    		});			
+    	});
     }
-    rawhtml = rawhtml + '</table></div>';
-    return rawhtml;
+    this.width = width;
+    this.height = height;
+    this.rawgrid = this.MakeGrid(width,height);
+    this.html = this.GridToHTML();
 }
 
-function AddGrid(g) {
-    var hex = 'FF5E5E';
-    var colorfloor = '5E';
-    var percent = 100/(g[0].length);
-    $("#columncolors").remove();
-    var stylehtml = '<style id="columncolors">';
-    for (column in g[0]) {
-        hex = AdvanceRGBHex(hex, colorfloor, percent);
-        rule = ' table.rainbowtable * .c' + String(column) + '.live {background-color:#'+hex+';}\n '; 
-        stylehtml = stylehtml + rule;
-    }
-    stylehtml = stylehtml + '</style>';
-    $(stylehtml).appendTo('head');
-	var h = GridToHTML(g);
-	$(document.body).append(h);
-	$("#lifegrid td").mousedown(function(){
-		ToggleSpot(this);
-		$("#lifegrid td").mouseover(function(){
-			ToggleSpot(this);
-		});			
-	});
-}
-
+/* ChangeGrid removes the old grid from the DOM and replaces it with a new grid of the appropriate width/height */
 function NewGrid() {
 	$('#lifegrid').remove();
 	var w =parseFloat($('#gridwidth')[0].value);
@@ -139,31 +159,28 @@ function SetBoxSize() {
 	$('td').css('height', newsize);
 }
 
-function ToggleSpot(spot) {
+function ToggleSpot(spot, grid) {
 	$(spot).toggleClass("live dead");
 	var pos = spot.id.split('r')[1];
 	var pos = pos.split('c');
 	var row = pos[0];
 	var column = pos[1];
-	if (g[row][column] == 0) 
-		g[row][column] = 1;
-	else
-		g[row][column] = 0;
+    grid.ToggleVal(row,column);
 }
 
 //Advance advances by toggling cells
-function Advance() {
-	var changes = RunDay(g);
+function Advance(grid) {
+	var changes = RunDay(grid);
 	for (change in changes) {
 		var r = changes[change][0];
 		var c = changes[change][1];
 		var id = '#r'+String(r)+'c'+String(c);
 		var spot = $(id)[0];
-		ToggleSpot(spot);
+		ToggleSpot(spot, grid);
 	}
 }
 
-function RemoveShape(targetcell, shape, oldvals) {
+function RemoveShape(targetcell, shape, oldvals, grid) {
     var newtargstring = '';
     var newtarg;
     var pos = targetcell.id.split('r')[1];
@@ -175,15 +192,15 @@ function RemoveShape(targetcell, shape, oldvals) {
         newtarg = $(newtargstring);
         if(newtarg.length > 0) {
             if(!newtarg.hasClass(oldvals[pixel])) 
-                ToggleSpot(newtarg[0]);
+                ToggleSpot(newtarg[0], grid);
             }
     }
 }
 
-function DragShape(shape) {
+function DragShape(shape, grid) {
     $("body").css('cursor', 'pointer');
 	$("td").mouseover(function(){
-		RenderShape(this, shape);
+		RenderShape(this, shape, grid);
 	});
 	$(document).mouseup(function(){
 		$("td").unbind('mouseover');
@@ -191,7 +208,7 @@ function DragShape(shape) {
 	});
 }
 
-function RenderShape(targetcell, shape) {
+function RenderShape(targetcell, shape, grid) {
     var oldvals = Array();
     var oldval = 0;
     var newtargstring = '';
@@ -208,14 +225,14 @@ function RenderShape(targetcell, shape) {
                 oldval = 'live';
             else {
                 oldval = 'dead';
-                ToggleSpot(newtarg[0]);
+                ToggleSpot(newtarg[0], grid);
             }
             oldvals.push(oldval);
         }
     }
     //Need to remove the shape if the user chooses to pass through.
     $(targetcell).mouseout(function(){
-	    RemoveShape(targetcell, shape, oldvals);
+	    RemoveShape(targetcell, shape, oldvals, grid);
 	    $(this).unbind('mouseout');
 	});
 	$(targetcell).mouseup(function(){
