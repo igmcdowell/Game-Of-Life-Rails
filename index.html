@@ -36,83 +36,79 @@
 			<h1>
 				Conway's Game of Life
 			</h1>
-			<div class="collapsiblesection">
-				<h2>
-					About:
-				</h2>
-				<div class="toggle expanded"></div>
-				<div id="info" class="group">
-					<p>
-						"Conway's Game of Life" is a mathematical simulation designed by John Horton Conway. This isn't the kind of game you score points in; you can think of it as a sort of "sim bacteria" where you set up some start conditions and watch what happens
-					</p>
-					<h3>
-						Instructions
-					</h3>
-					<p>
-						Click any square to make it "alive." Click a living square to make it "dead." You can also click and drag to change large swaths of cells, or you can drag and drop prefabs to see some of the well-known patterns. 
-					</p>
-					<p>
-						Click "Advance" to run one day of reproduction, or click "Run Simulation" to run multiple days in a row. You can speed up or slow down the simulation using the "Play Speed" bar.
-					</p>
-					<h3>
-						Rules (from <a href="http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Wikipedia</a>)
-					</h3>
-					<ol>
-						<li>The walls (squares around the perimeter) are poison. No cells will live there for more than a round.
-						</li>
-						<li>Any live square with fewer than two live neighbours dies at the end of the round.
-						</li>
-						<li>Any live cell with two or three live neighbours lives on to the next generation.
-						</li>
-						<li>Any live cell with more than three live neighbours dies, as if by overcrowding.
-						</li>
-						<li>Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
-						</li>
-					</ol>
-				</div>
-			</div>
-			<div class="collapsiblesection">
-				<h2>
-					Settings and Appearance:
-				</h2>
-				<div class="toggle expanded"></div>
-				<div class="group">
+			<div style="clear:both"></div>
+			<div id="sidebar">
+				<div class="collapsiblesection">
+					<h2>
+						Settings and Appearance:
+					</h2>
+					<div class="toggle expanded"></div>
 					<div class="group">
-						<p>
-							<strong>Play Speed</strong>
-						</p>
+							<div>
+								Cell Size:<input id="boxsize" value="10"><button onclick="SetBoxSize()">Set Cell Size</button>
+							</div>
+							<div><input type="checkbox" id="rainbow" checked="checked" /> Rainbow Cells</div>
 					</div>
+				</div>	
+				<div class="collapsiblesection">
+					<h2>
+						Grid Data:
+					</h2>
+					<div class="toggle expanded"></div>
 					<div class="group">
-						<div>
-							Cell Size:<input id="boxsize" value="15"><button onclick="SetBoxSize()">Set Cell Size</button>
-						</div>
-						<div><input type="checkbox" id="rainbow" checked="checked" /> Rainbow Cells</div>
-					</div>
-				</div>
-			</div>	
-			<div class="collapsiblesection">
-				<h2>
-					Grid Data:
-				</h2>
-				<div class="toggle expanded"></div>
-				<div class="group">
-						<p>
-							<strong>To/From String</strong>
-						</p>			
-						<textarea wrap="virtual" id="stringarea"></textarea>
-						<div><button id="stringify">Store Grid As String</button><button id="gridify">Create Grid From String</button></div>
 						<p>
 							<strong>New Blank Grid</strong>
 						</p>
 						Width: <input id="gridwidth" value="70"> Height:<input id="gridheight" value="40"> <button id="newgrid">Create New Grid</button>
+							<p>
+								<strong>To/From String</strong>
+							</p>			
+							<textarea wrap="virtual" id="stringarea"></textarea>
+							<div><button id="stringify">Store Grid As String</button><button id="gridify">Create Grid From String</button></div>
+							
+					</div>
+				</div>
+				<div class="collapsiblesection">
+					<h2>
+						About:
+					</h2>
+					<div class="toggle expanded"></div>
+					<div id="info" class="group">
+						<p>
+							"Conway's Game of Life" is a mathematical simulation; think of it as a sort of "Sim Bacteria" where cells live or die based on <a href="http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">certain rules</a>.
+						</p>
+						<h3>
+							Instructions
+						</h3>
+						<p>
+						Click and highlight squares to make them live/dead. You can also drag and drop existing patterns from the menu under the game grid. 
+						</p>
+						<p>
+							Click "Advance" to run one day of reproduction, or "Run Simulation" to auto-advance.
+						</p>
+					</div>
+				</div>
+
+			</div>
+			<div id="controls">
+				<div>
+				<div id="buttonholder">
+					<button id="advance">Advance One Day</button>
+					<button id="gamecontrol" value="stop">Run Simulation</button>
+				</div>
+				<div id="slider">
+					<div id="slowlabel" class="slidelabel">Slow</div>
+					<div id="mediumlabel" class="slidelabel">Medium</div>
+					<div id="fastlabel" class="slidelabel">Fast</div>
+					<div id="speedcontrol"></div>
+				</div>
 				</div>
 			</div>
-			<div class="collapsiblesection">
-				<h2>
-					Prefabs - Drag and Drop:
-				</h2>
-				<div class="toggle expanded"></div>
-				<div id="prefabs" class="group">
+			<div id="thegame">
+				<div id="tablearea">
+				</div>
+				<div id="prefabs" >
+					Patterns:
 					<div id="blinker" class="prefab">Blinker</div>
 					<div id="toad" class="prefab">Toad</div>
 					<div id="beacon" class="prefab">Beacon</div>
@@ -125,18 +121,7 @@
 					<div id="diehard" class="prefab">Diehard</div>
 					<div id="acorn" class="prefab">Acorn</div>
 				</div>
-			</div>
-			<div id="controls">
-				<div id="buttonholder">
-					<button id="advance">Advance One Day</button>
-					<button id="gamecontrol" value="stop">Run Simulation</button>
-				</div>
-				<div id="slider">
-					<div id="slowlabel" class="slidelabel">Slow</div>
-					<div id="mediumlabel" class="slidelabel">Medium</div>
-					<div id="fastlabel" class="slidelabel">Fast</div>
-					<div id="speedcontrol"></div>
-				</div>
+				
 			</div>
 			<input type="hidden" id="gamespeed" value="85" />
 		</div>

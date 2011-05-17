@@ -1,13 +1,29 @@
-
-
-h1 {
-    margin:0px;
+body {
+    overflow:auto;
 }
 
+h1 {
+    margin:0px 0px 15px 0px;
+    text-align:center;
+}
 
 table {
     border-collapse:collapse;
     border:5px solid #ccc;
+}
+
+td {
+    font-size:0em;
+    border:1px solid;
+    padding:0px;
+}
+
+td.live {
+    background-color:#ccc;
+}
+
+td.dead {
+    background-color:#fff;
 }
 
 table, .toggle, #prefabs, #controls{
@@ -17,16 +33,25 @@ table, .toggle, #prefabs, #controls{
      user-select: none;
 }
 
+
 textarea#stringarea {
-    width:700px;
-    height:3em;
+    width:150px;
+    height:5em;
     word-break:break-all;
 }
 
+#sidebar {
+    float:left;
+    position:relative;
+    font-size:.8em;
+    width:200px;
+    margin-right:20px;
+}
 
 #prefabs {
     margin-bottom:5px;
     padding:10px 5px;
+    float:right;
 }
 .prefab {
     display:inline;
@@ -34,57 +59,79 @@ textarea#stringarea {
     padding:5px;
 }
 
+
 #thegame {
     overflow:visible;
+    width:1000px;
 }
 #thegame table.running {
     border-color:green;
-}
-
-td {
-    font-size:0em;
-    min-width:20px;
-    height:20px;
-    border:1px solid;
-    padding:0px;
-    margin:0px;
-}
-
-tr {
-    margin:0px;
-}
-
-.collapsiblesection h2 {
-    margin:0px 0px 0px 20px;
-
 }
 
 .collapsiblesection {
     position:relative;
 }
 
-.toggle {
+.collapsiblesection h2 {
+    font-size:1.2em;
+    margin:0px 0px 0px 20px;
+
+}
+
+.collapsiblesection > .toggle {
     width:16px;
     min-height:16px;
     background-image:url('minusbox.png');
     position:absolute;
-    top:5px;
+    top:0px;
 }
 
 .toggle, .prefab {
     cursor:pointer;
 }
 
+.slidelabel {
+    position:absolute;
+    top:-1.6em;
+    font-size:90%;
+}
+
+.group {
+    margin:0px 0px 10px 18px;
+    border:1px solid #ccc;
+    padding:5px;
+}
+
+.group > .group {
+margin:0px;
+}
+
+.group  p{
+    margin:3px 0px;
+}
+
+#controls {
+   display:block;
+   float:left;
+   margin-bottom:4px;
+}
+
+#controls #buttonholder {
+    float:left;
+}
+
+#controls button {
+}
+
 #slider {
-    margin:1.5em 0em 10px 0px;
     width:200px;
     min-height:3px;
     border:1px solid;
-    position:relative;
-    left:20px;
     background-color:#eee;
-    margin-right:50px;
     float:left;
+    position:relative;
+    top:12px;
+    left:20px;
 }
 
 #slider #speedcontrol {
@@ -113,45 +160,6 @@ tr {
     right:-1em;
 }
 
-.live {
-    background-color:#ccc;
-}
-
-.dead {
-    background-color:#fff;
-}
-
-.slidelabel {
-    position:absolute;
-    top:-1.6em;
-    font-size:90%;
-}
 
 
-
-#controls {
-   display:inline;
-}
-
-#controls #buttonholder {
-    display:inline;
-}
-#controls button {
-       margin-top:12px;
-}
-
-.group {
-    margin:0px 0px 10px 18px;
-    border:1px solid #ccc;
-    padding:5px;
-    max-width:800px;
-}
-
-.group > .group {
-margin:0px;
-}
-
-.group  p{
-    margin:3px 0px;
-}
 

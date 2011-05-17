@@ -163,7 +163,7 @@ function Grid(width, height) {
     
     /* GridToHTML takes the grid of 0s and 1s and converts it to an HTML table. */
     this.GridToHTML = function() {
-        var rawhtml = '<div id="thegame"><table id="lifegrid" class="rainbowtable">';
+        var rawhtml = '<table id="lifegrid" class="rainbowtable">';
         var state = ['dead', 'live'];
         for (line in this.rawgrid) {
             rawhtml = rawhtml + '<tr id="row' + String(line)+'">';
@@ -172,7 +172,7 @@ function Grid(width, height) {
             }
             rawhtml = rawhtml + '</tr>';
         }
-        rawhtml = rawhtml + '</table></div>';
+        rawhtml = rawhtml + '</table>';
         return rawhtml;
     }    
     
@@ -296,7 +296,7 @@ function Grid(width, height) {
         }
         stylehtml = stylehtml + '</style>';
         $(stylehtml).appendTo('head');
-    	$(document.body).append(this.html);
+    	$("#tablearea").append(this.html);
     }
     
     this.setHandlers = function(shapes) {
@@ -328,7 +328,7 @@ function Grid(width, height) {
 
 /* ChangeGrid removes the old grid from the DOM and replaces it with a new grid of the appropriate width/height */
 function NewGrid(w,h) {
-	$('#thegame').remove();
+	$('#lifegrid').remove();
 	g = new Grid(w,h);
 	g.AddGridToDOM();
 	SetBoxSize();
