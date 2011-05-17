@@ -1,19 +1,20 @@
+
+/* CalcLife takes a grid of nine cells and determines whether the center cell is alive or dead for the next round
+according to the rules of Conway's Game of Life */
 function CalcLife (aboveleft, abovecenter, aboveright, left, center, right, belowleft, belowcenter, belowright) {
     var neighbors = aboveleft + abovecenter + aboveright + left + right + belowleft + belowcenter + belowright;
-    if (center ==1) {
-        if(neighbors > 3 || neighbors < 2) {
-           return 0; 
-        } 
+    if (neighbors == 3) 
         return 1;
-    }
-    if (neighbors == 3) {
+    if (center ==1) {
+        if(neighbors > 3 || neighbors < 2)
+           return 0; 
         return 1;
     }
     return 0;
 }
 
-/* RunDay executes CalcLife for each cell in the grid. The border of the grid is treated as a "death zone" that is always filled with zeroes 
-It returns a list of all values that have changed.
+/* RunDay executes CalcLife for each cell in the grid.  
+It returns a list of all cells that have changed.
 */
 function RunDay(grid) {
     var rlen = grid[0].length;
@@ -48,8 +49,7 @@ function Run(grid, runstatus) {
     var tdelay = 1000 - slidepos/178*900;
 	window.setTimeout(function(){
 		var status = $('#gamecontrol')[0].value;
-		if(status == runstatus) 
-		{
+		if(status == runstatus) {
 			Advance(grid);
 			Run(grid, runstatus);
 		}
