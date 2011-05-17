@@ -13,13 +13,24 @@ function CalcLife (aboveleft, abovecenter, aboveright, left, center, right, belo
     return 0;
 }
 
+function CalcLife2(neighbors,center) {
+    if (neighbors == 3) 
+        return 1;
+    if (center ==1) {
+        if(neighbors > 3 || neighbors < 2)
+           return 0; 
+        return 1;
+    }
+    return 0;
+}
+
 /* RunDay executes CalcLife for each cell in the grid.  
 It returns a list of all cells that have changed.
 */
 function RunDay(grid) {
     var rlen = grid[0].length;
     var changes = Array();
-    for(i = 1; i<grid.length-1; i++) {
+    for(var i = 1; i<grid.length-1; i++) {
         for(var j = 1; j<rlen -1; j++) {
             var tval = CalcLife(grid[i-1][j-1], grid[i-1][j],grid[i-1][j+1], grid[i][j-1], grid[i][j], grid[i][j+1], grid[i+1][j-1], grid[i+1][j], grid[i+1][j+1]);
             if(tval!=grid[i][j]) {
@@ -30,18 +41,40 @@ function RunDay(grid) {
     return changes;   
 }
 
-function PrintGrid(grid) {
- space = document.getElementById("gridout");
- output = '';
- for (line in grid) {
-     for (element in grid[line]) {
-         output = output + grid[line][element];
-     }
-     output = output + '<br />';
- }
-  space.innerHTML = output;
+/*RunDay2 takes a grid and returns a list of all changes
+While RunDay1 calculates the neighbors for every point, RunDay2 calculates horizontal triplets, then
+sums them to get the current value. It's probably faster...
+*/
+function RunDay2(grid) {
+    var changes = [];
+    var row1 = []; //create three rows in memory to work from.
+    for(var i =0; i<grid[0].length; i++) {
+        row1.push(0);
+    }
+    var row2 = row1.slice(0);
+    var row3 = [];
+    var currneighbors = 0;
+    var centerval = 0;
+    var center = 0;
+    for (i=0; i<grid.length;i++) { //loop through each row except the first and last.
+        for(var j=1; j<grid[0].length-1; j++) { //each eligible cell (not the edges) gets some neighbors calculations
+            center = grid[centerval][j];
+            row3.push(grid[i][j-1] + grid[i][j] + grid[i][j+1]);
+            currneighbors = row3[j]+row2[j]+row1[j] - center; 
+            var tval = CalcLife2(currneighbors, center);
+            if(tval!=center) {
+                changes.push([i-1,j]);
+            }
+        }
+        centerval = i;
+        row3.push(0);
+        row1 = row2.slice(0); //as we progress down, overwrite each row with the one below it.
+        row2 = row3.slice(0);
+        row3 = [0];
+    }
+    return changes;
 }
- 
+
 
 
 function Run(grid, runstatus) {
@@ -81,6 +114,27 @@ function StartStop(grid) {
 	}
 	else {
 	    Start(runName, stopName, grid)
+	}
+}
+
+function ToggleSpot(spot, grid) {
+	$(spot).toggleClass("live dead");
+	var pos = spot.id.split('r')[1];
+	var pos = pos.split('c');
+	var row = pos[0];
+	var column = pos[1];
+    grid.ToggleVal(row,column);
+}
+
+//Advance advances by toggling cells
+function Advance(grid) {
+	var changes = RunDay2(grid.rawgrid);
+	for (change in changes) {
+		var r = changes[change][0];
+		var c = changes[change][1];
+		var id = '#r'+String(r)+'c'+String(c);
+		var spot = $(id)[0];
+		ToggleSpot(spot, grid);
 	}
 }
 
@@ -273,27 +327,6 @@ function SetBoxSize() {
 	var newsize = parseInt(val);
 	$("#boxstyle").remove();
 	$("<style type='text/css' id='boxstyle'> td{ min-width:"+ val + "px; height:" + val+"px;} </style>").appendTo("head");
-}
-
-function ToggleSpot(spot, grid) {
-	$(spot).toggleClass("live dead");
-	var pos = spot.id.split('r')[1];
-	var pos = pos.split('c');
-	var row = pos[0];
-	var column = pos[1];
-    grid.ToggleVal(row,column);
-}
-
-//Advance advances by toggling cells
-function Advance(grid) {
-	var changes = RunDay(grid.rawgrid);
-	for (change in changes) {
-		var r = changes[change][0];
-		var c = changes[change][1];
-		var id = '#r'+String(r)+'c'+String(c);
-		var spot = $(id)[0];
-		ToggleSpot(spot, grid);
-	}
 }
 
 function RemoveShape(targetcell, shape, oldvals, grid) {
