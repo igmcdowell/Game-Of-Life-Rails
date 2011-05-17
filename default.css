@@ -10,7 +10,7 @@ table {
     border:5px solid #ccc;
 }
 
-table, .toggle, #prefabs{
+table, .toggle, #prefabs, #controls{
     -moz-user-select: none;
      -khtml-user-select: none;
      -webkit-user-select: none;
@@ -79,17 +79,20 @@ tr {
 #slider {
     margin:1.5em 0em 10px 0px;
     width:200px;
-    min-height:10px;
+    min-height:3px;
     border:1px solid;
     position:relative;
     left:20px;
+    background-color:#eee;
+    margin-right:50px;
+    float:left;
 }
 
 #slider #speedcontrol {
-    width:20px;
-    height:20px;
+    width:15px;
+    height:15px;
     position:absolute;
-    top:-6px;
+    top:-7px;
     left:89px;
     border:1px solid;
     background-color:#ccc;
@@ -97,6 +100,18 @@ tr {
 
 #slider #speedcontrol {
     cursor:pointer;
+}
+
+#slider #slowlabel {
+    left:-1em;
+}
+
+#slider #mediumlabel {
+    left:75px;
+}
+
+#slider #fastlabel {
+    right:-1em;
 }
 
 .live {
@@ -113,16 +128,17 @@ tr {
     font-size:90%;
 }
 
-#slowlabel {
-    left:-1em;
+
+
+#controls {
+   display:inline;
 }
 
-#mediumlabel {
-    left:75px;
+#controls #buttonholder {
+    display:inline;
 }
-
-#fastlabel {
-    right:-1em;
+#controls button {
+       margin-top:12px;
 }
 
 .group {

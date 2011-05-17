@@ -18,8 +18,10 @@
 		<script type="text/javascript">
 
 		$(document).ready(function() {
-			var g = new Grid(50,50);
-			g.AddGridToDOM();
+			w= parseInt($("#gridwidth")[0].value);
+			h= parseInt($("#gridheight")[0].value);
+			g = NewGrid(w,h);
+			SetBoxSize();
 			$(document).mouseup(function(){
 				$("td").unbind('mouseover');
 			});
@@ -30,6 +32,7 @@
 			$("#gamecontrol").click(function(){
 				StartStop(g);
 			});
+			
 			$("#newgrid").click(function(){
 				w= parseInt($("#gridwidth")[0].value);
 				h= parseInt($("#gridheight")[0].value);
@@ -63,7 +66,8 @@
 				
 			});
 			
-			$("#speedcontrol").mouseup(function(){
+			$("#speedcontrol").mousemove(function(){
+				
 				$("#gamespeed")[0].value = $("#speedcontrol").position().left;
 			});
 			
@@ -175,23 +179,11 @@
 					<p>
 						<strong>Play Speed</strong>
 					</p>
-					<div id="slider">
-						<div id="slowlabel" class="slidelabel">
-							Slow
-						</div>
-						<div id="mediumlabel" class="slidelabel">
-							Medium
-						</div>
-						<div id="fastlabel" class="slidelabel">
-							Fast
-						</div>
-						<div id="speedcontrol"></div>
-					</div>
-					<button id="advance">Advance One Day</button><button id="gamecontrol" value="stop">Run Simulation</button>
+
 			</div>
 			<div class="group">
 			<div>
-				Cell Size:<input id="boxsize" value="20"><button onclick="SetBoxSize()">Set Cell Size</button>
+				Cell Size:<input id="boxsize" value="15"><button onclick="SetBoxSize()">Set Cell Size</button>
 			</div>
 			<div><input type="checkbox" id="rainbow" checked="checked" /> Rainbow Cells
 		</div>
@@ -212,7 +204,7 @@
 				<p>
 					<strong>New Blank Grid</strong>
 				</p>
-								 Width: <input id="gridwidth" value="50"> Height:<input id="gridheight" value="50"> <button id="newgrid">Create New Grid</button>
+								 Width: <input id="gridwidth" value="70"> Height:<input id="gridheight" value="40"> <button id="newgrid">Create New Grid</button>
 			</div>
 				
 		</div>
@@ -236,6 +228,23 @@
 				<div id="diehard" class="prefab">Diehard</div>
 				<div id="acorn" class="prefab">Acorn</div>
 			</div>
+			<div id="controls">
+				<div id="buttonholder">
+				<button id="advance">Advance One Day</button>
+				<button id="gamecontrol" value="stop">Run Simulation</button>
+				</div>
+				<div id="slider">
+				<div id="slowlabel" class="slidelabel">
+					Slow
+				</div>
+				<div id="mediumlabel" class="slidelabel">
+					Medium
+				</div>
+				<div id="fastlabel" class="slidelabel">
+					Fast
+				</div>
+				<div id="speedcontrol"></div>
+			</div></div>
 			<input type="hidden" id="gamespeed" value="85" />
 		</div>
 	</body>
