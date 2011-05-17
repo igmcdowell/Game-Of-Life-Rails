@@ -282,6 +282,7 @@ function Grid(width, height) {
     }
     
     this.AddGridToDOM = function(){
+        Stop("Run Simulation", "Stop Simulation");
         var grid = this;
         var hex = 'FF5E5E';
         var colorfloor = '5E';
@@ -296,13 +297,22 @@ function Grid(width, height) {
         stylehtml = stylehtml + '</style>';
         $(stylehtml).appendTo('head');
     	$(document.body).append(this.html);
-    	$("#lifegrid td").mousedown(function(){
-    		ToggleSpot(this, grid);
-    		isMouseDown = true;
+    }
+    
+    this.setHandlers = function(shapes) {
+        var g = this;
+        $("#lifegrid td").mousedown(function(){
+    		ToggleSpot(this, g);
+    		isHighlightingBoxes = true;
 		});
     	$("#lifegrid td").mouseover(function(){
-    			if(isMouseDown)
-    			    ToggleSpot(this, grid);			
+    			if(isHighlightingBoxes)
+    			    ToggleSpot(this, g);	
+    			if(isDraggingShape) {
+    				var selectedShape = $("#prefabs > .selected")[0].id;
+    				var pattern = shapes[selectedShape];
+    				RenderShape(this, pattern, g);
+				}
     	});
     }
 
@@ -321,6 +331,7 @@ function NewGrid(w,h) {
 	$('#thegame').remove();
 	g = new Grid(w,h);
 	g.AddGridToDOM();
+	SetBoxSize();
 	return g;
 }
 	
@@ -355,10 +366,7 @@ function DragShape(shape, grid) {
 	$("td").mouseover(function(){
 		RenderShape(this, shape, grid);
 	});
-	$(document).mouseup(function(){
-		$("td").unbind('mouseover');
-		$("body").css('cursor', 'default');
-	});
+
 }
 
 function RenderShape(targetcell, shape, grid) {
