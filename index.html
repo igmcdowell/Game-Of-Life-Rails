@@ -31,9 +31,19 @@
 				StartStop(g);
 			});
 			$("#newgrid").click(function(){
-				w= $("#gridwidth")[0].value;
-				h= $("#gridheight")[0].value;
+				w= parseInt($("#gridwidth")[0].value);
+				h= parseInt($("#gridheight")[0].value);
 				g = NewGrid(w,h);
+			});
+			
+			$("#stringify").click(function(){
+				var string = g.GridToString();
+				$("#stringarea")[0].value = string;
+			});
+			
+			$("#gridify").click(function(){
+				var s = $("#stringarea")[0].value;
+				g=NewGrid(s,0);
 			});
 			
 			$(".toggle").click(function(){
@@ -157,7 +167,7 @@
 		</div>
 		<div class="collapsiblesection">
 			<h2>
-				Settings:
+				Settings and Appearance:
 			</h2>
 			<div class="toggle expanded"></div>
 			<div class="group">
@@ -178,16 +188,34 @@
 						<div id="speedcontrol"></div>
 					</div>
 					<button id="advance">Advance One Day</button><button id="gamecontrol" value="stop">Run Simulation</button>
-					<div><input type="checkbox" id="rainbow" checked="checked" /> Rainbow Cells
-				</div>
 			</div>
 			<div class="group">
 			<div>
 				Cell Size:<input id="boxsize" value="20"><button onclick="SetBoxSize()">Set Cell Size</button>
 			</div>
-			<div>
-				Reset Grid - Width: <input id="gridwidth" value="50"> Height:<input id="gridheight" value="50"> <button id="newgrid">Make New Grid</button>
+			<div><input type="checkbox" id="rainbow" checked="checked" /> Rainbow Cells
+		</div>
+		</div>
+		</div>
+		<div class="collapsiblesection">
+			<h2>
+				Grid Data:
+			</h2>
+			<div class="toggle expanded"></div>
+			<div class="group">
+			<div>	
+				<p>
+					<strong>To/From String</strong>
+				</p>			
+				<textarea wrap="virtual" id="stringarea"></textarea>
+				<div><button id="stringify">Store Grid As String</button><button id="gridify">Create Grid From String</button></div>
+				<p>
+					<strong>New Blank Grid</strong>
+				</p>
+								 Width: <input id="gridwidth" value="50"> Height:<input id="gridheight" value="50"> <button id="newgrid">Create New Grid</button>
 			</div>
+				
+		</div>
 		</div>
 		</div>
 		<div class="collapsiblesection">

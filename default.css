@@ -17,6 +17,14 @@ table, .toggle, #prefabs{
      user-select: none;
 }
 
+textarea#stringarea {
+    width:700px;
+    height:3em;
+    word-break:keep-all;
+    white-space:pre-wrap;
+}
+
+
 #prefabs {
     margin-bottom:5px;
     padding:10px 5px;
@@ -126,5 +134,9 @@ tr {
 
 .group > .group {
 margin:0px;
+}
+
+.group  p{
+    margin:3px 0px;
 }
 

@@ -122,6 +122,111 @@ function Grid(width, height) {
         return rawhtml;
     }    
     
+    /* GridToString takes the grid of 0s and 1s and converts it to a compressed string. 
+    String.fromCharCode(n) gives a string
+    s.charCodeAt(0) gives the int value
+    Could start a language at charcode 36 and go up to charcode 126. That gives a base 90 language.
+    
+    Each charcode represents a string of 0s, unless prefixed by a !
+    
+    Special delimiters: 
+     # - new line
+     ! - string of 1s
+    */
+    this.GridToString = function() { 
+        function ValToString(val) {
+            val = val + 35;
+            if (val ==0) {
+                return '';
+            }
+            if (val < 127) {
+                return String.fromCharCode(val);
+            }
+            else {
+                return '~' + ValToString(val-126);
+            }
+        }
+        var gs = '';
+        gs = gs + ValToString(this.rawgrid[0].length)+ '#' + ValToString(this.rawgrid.length) + '#';
+        var contigs = 0;
+        var onzero = true;
+        var cval = 0;
+        for (row in this.rawgrid) {
+            onzero = true;
+            for (cell in this.rawgrid[row]) {
+                cval = this.rawgrid[row][cell];
+                if(onzero) { //we're on a string of zeroes
+                    if(cval == 0) {
+                        contigs++;
+                    }
+                    else {
+                        gs = gs + ValToString(contigs);
+                        onzero = false;
+                        contigs = 1;
+                    }
+                }
+                else { //we're on a string of ones
+                    if(cval==1) { //we're still on a string. Increment counter
+                        contigs++;
+                    }
+                    else { //the string is done. Need to record it and move on.
+                        gs = gs + '!' + ValToString(contigs);
+                        contigs = 1;
+                        onzero = true;
+                    }
+                }
+            }
+        }
+        if(onzero) {
+            gs = gs + ValToString(contigs);
+        }
+        else {
+            gs = gs + '!' + ValToString(contigs);
+        }
+        return gs;
+    }
+    
+    this.MakeGridFromString = function(s) {
+        function charToVal(c) {
+            return c.charCodeAt(0) - 35;
+        }
+        var hashes = s.split('#')
+        var w = parseInt(charToVal(hashes[0]));
+        var h = parseInt(charToVal(hashes[1]));
+        var celldata = hashes[2];
+        var rawgrid = [];
+        var row = [];
+        var remainder = this.width;
+        var onestring = false;
+        var leftoverones = false;
+        var contigs = 0;
+        var rowindex = 0;
+        var colindex = 0;
+        for (var i = 0; i< celldata.length; i++) {
+            if(celldata[i]=='!') {
+                onestring = true;
+                i++;
+            }
+            else {
+                onestring = false;
+            }
+            contigs = charToVal(celldata[i]);
+            while(contigs > 0) {
+                if(onestring)
+                    row.push(1);
+                else
+                    row.push(0);
+                if(row.length == w) {
+                    rawgrid.push(row);
+                    row = [];
+                }
+                contigs = contigs -1;       
+            }
+        }
+        rawgrid.push(row);
+        return rawgrid;
+    }
+    
     this.AddGridToDOM = function(){
         var grid = this;
         var hex = 'FF5E5E';
@@ -144,17 +249,20 @@ function Grid(width, height) {
     		});			
     	});
     }
-    this.width = width;
-    this.height = height;
-    this.rawgrid = this.MakeGrid(width,height);
+
+    if(typeof(width)=='number') 
+        this.rawgrid = this.MakeGrid(width,height);
+    else {
+        this.rawgrid = this.MakeGridFromString(width);
+    }
+    this.width = this.rawgrid[0].length;
+    this.height = this.rawgrid.length;
     this.html = this.GridToHTML();
 }
 
 /* ChangeGrid removes the old grid from the DOM and replaces it with a new grid of the appropriate width/height */
-function NewGrid() {
-	$('#lifegrid').remove();
-	var w =parseFloat($('#gridwidth')[0].value);
-	var h =parseFloat($('#gridheight')[0].value);
+function NewGrid(w,h) {
+	$('#thegame').remove();
 	g = new Grid(w,h);
 	g.AddGridToDOM();
 	return g;
