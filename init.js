@@ -4,9 +4,13 @@ w= parseInt($("#gridwidth")[0].value);
 h= parseInt($("#gridheight")[0].value);
 g = NewGrid(w,h);
 SetBoxSize();
-$(document).mouseup(function(){
-	$("td").unbind('mouseover');
+
+isMouseDown = false
+$('body').mouseup(function() {
+    isMouseDown = false;
 });
+
+
 $("#speedcontrol").draggable({ axis: 'x' }, { containment: 'parent' });
 $("#advance").click(function(){
 	Advance(g);

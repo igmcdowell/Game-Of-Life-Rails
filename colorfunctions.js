@@ -154,6 +154,6 @@ var ColorUtils = function() {
     }
     return {
         AdvanceRGBHex: AdvanceRGBHex,
-        AdvanceDec: AdvanceDec
+        AdvanceRGBDec: AdvanceRGBDec
     }
 }();

@@ -298,9 +298,11 @@ function Grid(width, height) {
     	$(document.body).append(this.html);
     	$("#lifegrid td").mousedown(function(){
     		ToggleSpot(this, grid);
-    		$("#lifegrid td").mouseover(function(){
-    			ToggleSpot(this, grid);
-    		});			
+    		isMouseDown = true;
+		});
+    	$("#lifegrid td").mouseover(function(){
+    			if(isMouseDown)
+    			    ToggleSpot(this, grid);			
     	});
     }
 
@@ -328,6 +330,7 @@ function SetBoxSize() {
 	$("#boxstyle").remove();
 	$("<style type='text/css' id='boxstyle'> td{ min-width:"+ val + "px; height:" + val+"px;} </style>").appendTo("head");
 }
+
 
 function RemoveShape(targetcell, shape, oldvals, grid) {
     var newtargstring = '';
