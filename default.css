@@ -165,6 +165,22 @@ margin:0px;
     right:-1em;
 }
 
+/* ===== Footer ===== */
+#footer {
+padding-top: 5px;
+color: #bbb;
+font-size: 70%;
+text-align: center;
+clear: both;
+}
 
+#license {
+border-width: 0;
+vertical-align: bottom;
+}
+
+#licenseText {
+margin-right: 100px;
+}
 
 
