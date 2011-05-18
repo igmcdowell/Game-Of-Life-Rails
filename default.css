@@ -28,7 +28,7 @@ td.dead {
     background-color:#fff;
 }
 
-table, .toggle, #prefabs, #controls{
+.toggle, #controls, #thegame{
     -moz-user-select: none;
      -khtml-user-select: none;
      -webkit-user-select: none;

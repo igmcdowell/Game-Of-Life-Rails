@@ -5,7 +5,7 @@ function CalcLife (aboveleft, abovecenter, aboveright, left, center, right, belo
     var neighbors = aboveleft + abovecenter + aboveright + left + right + belowleft + belowcenter + belowright;
     if (neighbors == 3) 
         return 1;
-    if (center ==1) {
+    if (center) {
         if(neighbors > 3 || neighbors < 2)
            return 0; 
         return 1;
@@ -16,7 +16,7 @@ function CalcLife (aboveleft, abovecenter, aboveright, left, center, right, belo
 function CalcLife2(neighbors,center) {
     if (neighbors == 3) 
         return 1;
-    if (center ==1) {
+    if (center) {
         if(neighbors > 3 || neighbors < 2)
            return 0; 
         return 1;
@@ -142,7 +142,7 @@ function Advance(grid) {
 function Grid(width, height) {
     /* MakeGrid takes a width and height and returns a wXh array initialized to 0*/
     this.MakeGrid =function(width, height) {
-       if(height == 0){
+       if(!height){
            return Array();
        }
        var row = Array();
@@ -190,7 +190,7 @@ function Grid(width, height) {
     this.GridToString = function() { 
         function ValToString(val) {
             val = val + 35;
-            if (val ==0) {
+            if (!val) {
                 return '';
             }
             if (val < 127) {
@@ -210,7 +210,7 @@ function Grid(width, height) {
             for (cell in this.rawgrid[row]) {
                 cval = this.rawgrid[row][cell];
                 if(onzero) { //we're on a string of zeroes
-                    if(cval == 0) {
+                    if(!cval) {
                         contigs++;
                     }
                     else {
@@ -220,7 +220,7 @@ function Grid(width, height) {
                     }
                 }
                 else { //we're on a string of ones
-                    if(cval==1) { //we're still on a string. Increment counter
+                    if(cval) { //we're still on a string. Increment counter
                         contigs++;
                     }
                     else { //the string is done. Need to record it and move on.
@@ -256,7 +256,8 @@ function Grid(width, height) {
         var contigs = 0;
         var rowindex = 0;
         var colindex = 0;
-        for (var i = 0; i< celldata.length; i++) {
+        var cellen = celldata.length;
+        for (var i = 0; i< cellen; i++) {
             if(celldata[i]=='!') {
                 onestring = true;
                 i++;
