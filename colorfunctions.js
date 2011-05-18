@@ -1,74 +1,17 @@
 var ColorUtils = function() {
-
-    /* ParseHexDigit takes a one character string representing a hex digit and returns its decimal equivalent as an int.*/
-    function ParseHexDigit(hexdigit) {
-        var num;
-        var h = hexdigit;
-        switch (h) {
-        case "A":
-            return 10;
-        case 'B':
-            return 11;
-        case 'C':
-            return 12;
-        case 'D':
-            return 13;
-        case 'E':
-            return 14;
-        case 'F':
-            return 15;
-        default:
-            num = parseInt(hexdigit);
-        }
-        return num;
-    }
-
-    /*ParseHexDouble takes a 2 bit string representing a hex number and returns its decimal equivalent as an int*/
-    function ParseHexDouble(hexdouble) {
-        return ParseHexDigit(hexdouble[1]) + ParseHexDigit(hexdouble[0]) * 16;
-    }
-
-    function DigitToHex(digit) {
-        switch (digit) {
-        case 10:
-            return 'A';
-        case 11:
-            return 'B';
-        case 12:
-            return 'C';
-        case 13:
-            return 'D';
-        case 14:
-            return 'E';
-        case 15:
-            return 'F';
-        default:
-            l = String(digit);
-        }
-        return l;
-    }
-
-    function IntToHex(i) {
-        var d1 = DigitToHex(Math.floor(i / 16));
-        var d2 = DigitToHex(i % 16);
-        var h = d1 + d2;
-        return h;
-    }
-
-
     /* AdvanceRGB takes a hex color and returns a new hex a given percent around the color wheel. */
     function AdvanceRGBHex(start, cutoff, percent) {
         var redhex = start[0] + start[1];
         var greenhex = start[2] + start[3];
         var bluehex = start[4] + start[5];
-        var cutoffdec = ParseHexDouble(cutoff);
+        var cutoffdec = parseInt(cutoff, 16);
         var loopsize = (255 - cutoffdec) * 6;
-        var reddec = ParseHexDouble(redhex);
-        var greendec = ParseHexDouble(greenhex);
-        var bluedec = ParseHexDouble(bluehex);
+        var reddec = parseInt(redhex, 16);
+        var greendec = parseInt(greenhex, 16);
+        var bluedec = parseInt(bluehex, 16);
         var amount = Math.floor(loopsize * percent / 100);
         var newcolors = AdvanceRGBDec(reddec, bluedec, greendec, cutoffdec, amount);
-        var newhex = IntToHex(newcolors[0]) + IntToHex(newcolors[1]) + IntToHex(newcolors[2]);
+        var newhex = newcolors[0].toString(16) + newcolors[1].toString(16) + newcolors[2].toString(16);
         return newhex;
     }
 
