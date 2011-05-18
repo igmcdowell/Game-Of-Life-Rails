@@ -16,12 +16,12 @@ table {
 
 td {
     font-size:0em;
-    border:1px solid;
+    border:1px solid #ddd;
     padding:0px;
 }
 
 td.live {
-    background-color:#ccc;
+    background-color:#bbb;
 }
 
 td.dead {
