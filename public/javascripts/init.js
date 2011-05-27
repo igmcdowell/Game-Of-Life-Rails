@@ -65,7 +65,7 @@ $("#storify").click(function() {
     thebutton.attr('disabled', 'disabled');
     var oldtext = thebutton.text();
     thebutton.text('Contacting Server');
-    var urlstring = window.location.toString().replace(/\/[0-9]+/, '/');
+    var urlstring = window.location.origin.toString() + /games/;
     var gdata = g.rawgrid.join().replace(/,/g,'');
     $.ajax({
        format: "json",
