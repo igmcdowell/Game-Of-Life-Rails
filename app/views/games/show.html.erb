@@ -1,38 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>
-			jQuery Life
-		</title>
-		<meta name="generator" content="TextMate http://macromates.com/">
-		<meta name="author" content="Ian McDowell"><!-- Date: 2011-05-12 -->
-		<link rel="stylesheet" href="./default.css" type="text/css">
-		<script src="./jquery-1.6.1.min.js" type="text/javascript"></script>
-		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js" type="text/javascript"></script>
-		<script src="./life.js" type="text/javascript"></script>
-		<script src="./colorfunctions.js" type="text/javascript"></script>
-		<script src="./init.js" type="text/javascript"></script>
+	<body>
 		<script type="text/javascript">
 
 		$(document).ready(function() {
+			g = NewGrid(<%= @game.width%>,<%= @game.height%> <% if @grid %><%=', ' +  @grid%><% end %>);
 			initializeGame();
 			
 		});
 		</script>
-		<script type="text/javascript">
-		var _gaq = _gaq || [];
-		_gaq.push(['_setAccount', 'UA-22272971-1']);
-		_gaq.push(['_trackPageview']);
-		(function() {
-			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-		})();
-		</script>
-	</head>
-	<body>
 		<div id="main">
 			<h1>
 				Conway's Game of Life
@@ -60,13 +34,15 @@
 						<p>
 							<strong>New Blank Grid</strong>
 						</p>
-						Width: <input id="gridwidth" value="85"> Height:<input id="gridheight" value="45"> <button id="newgrid">Create New Grid</button>
+						Width: <input id="gridwidth" value="<%= @game.width%>"> Height:<input id="gridheight" value="<%= @game.height%>"> <button id="newgrid">Create New Grid</button>
 							<p>
 								<strong>To/From String</strong>
 							</p>			
 							<textarea rows="4" cols="12" id="stringarea"></textarea>
 							<button id="stringify">Store Grid As String</button><button id="gridify">Create Grid From String</button>
-							
+							<strong>Store on Server</strong>
+							<button id="storify">Store Grid on Server</button>
+							<div id="storemessage" class="working"></div>
 					</div>
 				</div>
 				<div class="collapsiblesection">
@@ -109,15 +85,15 @@
 				<div id="tablearea">
 				</div>
 				<div id="prefabs">
-					<button id="blinker" class="prefab" style="position:relative"><img src="./imgs/blinker.png" width="34px" height="12px" /><div class="button-label" >Blinker</div></button>
-					<button id="toad" class="prefab"><img src="./imgs/toad.png" width="45px" height="22px" /><div class="button-label" >Toad</div></button>
-					<button id="beacon" class="prefab"><img src="./imgs/beacon.png" width="45px" height="45px" /><div class="button-label" >Beacon</div></button>
-					<button id="pulsar" class="prefab"><img src="./imgs/pulsar.png" width="50px" height="50px"/><div class="button-label" >Pulsar</div></button>
-					<button id="glider" class="prefab"><img src="./imgs/glider.png" width="34px" height="34px" /><div class="button-label" >Glider</div></button>
-					<button id="lwss" class="prefab"><img src="./imgs/lwss.png" width="52px" height="41px" /><div class="button-label" >LWSS</div></button>
-					<button id="fpentomino" class="prefab"><img src="./imgs/f-pentomino.png" /><div class="button-label" >F-Pentomino</div></button>
-					<button id="diehard" class="prefab"><img src="./imgs/diehard.png" width="60px" height="20px" /><div class="button-label" >Diehard</div></button>
-					<button id="acorn" class="prefab"><img src="./imgs/acorn.png" width="59px" height="26px"/><div class="button-label" >Acorn</div></button>
+					<button id="blinker" class="prefab" style="position:relative"><img src="/images/blinker.png" width="34px" height="12px" /><div class="button-label" >Blinker</div></button>
+					<button id="toad" class="prefab"><img src="/images/toad.png" width="45px" height="22px" /><div class="button-label" >Toad</div></button>
+					<button id="beacon" class="prefab"><img src="/images/beacon.png" width="45px" height="45px" /><div class="button-label" >Beacon</div></button>
+					<button id="pulsar" class="prefab"><img src="/images/pulsar.png" width="50px" height="50px"/><div class="button-label" >Pulsar</div></button>
+					<button id="glider" class="prefab"><img src="/images/glider.png" width="34px" height="34px" /><div class="button-label" >Glider</div></button>
+					<button id="lwss" class="prefab"><img src="/images/lwss.png" width="52px" height="41px" /><div class="button-label" >LWSS</div></button>
+					<button id="fpentomino" class="prefab"><img src="/images/f-pentomino.png" /><div class="button-label" >F-Pentomino</div></button>
+					<button id="diehard" class="prefab"><img src="/images/diehard.png" width="60px" height="20px" /><div class="button-label" >Diehard</div></button>
+					<button id="acorn" class="prefab"><img src="/images/acorn.png" width="59px" height="26px"/><div class="button-label" >Acorn</div></button>
 				</div>
 				
 			</div>
@@ -129,3 +105,4 @@
 		
 	</body>
 </html>
+

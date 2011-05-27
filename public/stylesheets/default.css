@@ -1,0 +1,221 @@
+/* ===== General ===== */
+
+body {
+    min-width:1200px;
+    background-color:#eee;
+}
+
+h1 {
+    margin:0px 0px 15px 0px;
+    text-align:center;
+}
+
+table#lifegrid {
+    border-collapse:collapse;
+    border:5px solid #ccc;
+}
+
+table#lifegrid td {
+    font-size:0em;
+    border:1px solid #ddd;
+    padding:0px;
+}
+
+td.live {
+    background-color:#bbb;
+}
+
+td.dead {
+    background-color:#fff;
+}
+
+.toggle, #controls, #thegame{
+    -moz-user-select: none;
+     -khtml-user-select: none;
+     -webkit-user-select: none;
+     user-select: none;
+}
+
+#main {
+    border:1px solid #ccc;
+    background-color:#fff;
+    padding:8px;
+}
+
+#main h1 {
+    margin:5px 0px 15px 0px;
+    border:1px solid #aaa;
+    border-radius:8px;
+    padding:3px;
+    background-color:#fbfbfb;
+}
+
+/* ===== Sidebar ===== */
+#sidebar {
+    float:left;
+    font-size:.8em;
+    width:200px;
+    margin-right:20px;
+}
+
+#sidebar textarea#stringarea {
+    width:150px;
+    height:5em;
+    word-break:break-all;
+}
+
+.collapsiblesection {
+    position:relative;
+}
+
+.collapsiblesection h2 {
+    font-size:1.2em;
+    margin:0px 0px 0px 20px;
+
+}
+
+.collapsiblesection > .toggle {
+    width:16px;
+    min-height:16px;
+    background-image:url('/images/minusbox.png');
+    position:absolute;
+    top:0px;
+}
+
+.group {
+    margin:0px 0px 10px 18px;
+    border:1px solid #ccc;
+    padding:5px;
+}
+
+.group  p{
+    margin:3px 0px;
+}
+
+/* ===== Prefabs ===== */
+#prefabs {
+    margin-bottom:5px;
+    padding:10px 5px;
+    float:right;
+    height:100px;
+}
+.prefab {
+    float:left;;
+    height:80px;
+    width:80px;
+    background-color:#fafafa;
+    margin-left:5px;  
+    position:relative;
+    padding:0px;
+    background-image:url(/images/drag-cross.png);
+    background-repeat:no-repeat;
+    background-position:95% 5%;
+}
+
+.prefab img {
+    display:block;
+    margin:0px auto;
+    padding:0px;
+}
+
+.prefab .button-label {
+    position:absolute; 
+    width:100%;
+    bottom:3px; 
+    margin:0px auto;
+    text-align:center;
+}
+
+/* ===== Game Area ===== */
+#thegame {
+    width:800px;
+    margin-top:10px;
+    float:left;
+}
+
+#thegame #tablearea {
+    width:900px;
+}
+
+#thegame table.running {
+    border-color:green;
+}
+
+
+
+.toggle, .prefab {
+    cursor:pointer;
+}
+
+
+
+/* ===== Controls/Slider ===== */
+#controls #buttonholder {
+    float:left;
+}
+
+#controls #buttonholder button {
+    width:120px;
+    margin-right:5px;
+}
+
+#slider {
+    float:left;
+    width:200px;
+    min-height:3px;
+    border:1px solid;
+    background-color:#fbfbfb;
+    position:relative;
+    margin-top:12px;
+    margin-left:20px;
+}
+
+#slider #speedcontrol {
+    width:15px;
+    height:15px;
+    position:absolute;
+    top:-7px;
+    left:89px;
+    border:1px solid;
+    background-color:#ccc;
+    cursor:pointer;
+    border-radius:6px;
+}
+
+#slider .slidelabel {
+    position:absolute;
+    top:-1.6em;
+    font-size:90%;
+}
+
+#slider #slowlabel {
+    left:-1em;
+}
+
+#slider #mediumlabel {
+    left:75px;
+}
+
+#slider #fastlabel {
+    right:-1em;
+}
+
+/* ===== Footer ===== */
+#footer {
+padding-top: 5px;
+color: #bbb;
+font-size: 70%;
+text-align: center;
+clear: both;
+}
+
+#license {
+border-width: 0;
+vertical-align: bottom;
+}
+
+#licenseText {
+margin-right: 15px;
+}
+
+
